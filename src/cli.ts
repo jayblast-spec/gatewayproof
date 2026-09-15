@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { runConformanceSuite } from "./runner.js";
 
 function parseArgs(argv: string[]): { target?: string; mockPort?: number } {
