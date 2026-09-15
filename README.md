@@ -3,6 +3,7 @@
 [![CI](https://github.com/jayblast-spec/gatewayproof/actions/workflows/ci.yml/badge.svg)](https://github.com/jayblast-spec/gatewayproof/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/gatewayproof)](https://www.npmjs.com/package/gatewayproof)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Docs](https://img.shields.io/badge/docs-gatewayproof.vercel.app-5eeab0)](https://gatewayproof.vercel.app)
 
 ![gatewayproof: conformance-testing an OpenAI-compatible LLM gateway](./docs/banner.svg)
 
