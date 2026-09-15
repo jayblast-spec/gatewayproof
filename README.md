@@ -125,3 +125,7 @@ npx tsx examples/demo.ts   # runs the suite against a correct fixture and a deli
 ## License
 
 MIT
+
+---
+
+Built by [ArkNet Digital](https://github.com/jayblast-spec).
