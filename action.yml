@@ -1,0 +1,61 @@
+name: 'gatewayproof'
+description: 'Conformance suite for OpenAI-compatible LLM gateways -- streaming, usage, cost, concurrency, and error-propagation checks.'
+author: 'jayblast-spec'
+branding:
+  icon: 'check-circle'
+  color: 'green'
+
+inputs:
+  target:
+    description: 'Base URL of the gateway under test (must already be configured to forward its upstream requests to mock-port)'
+    required: true
+  mock-port:
+    description: 'Fixed local port to run the mock upstream on -- must match what your gateway is configured to forward to'
+    required: false
+    default: '5055'
+
+outputs:
+  passed:
+    description: '"true" if every check passed, "false" otherwise'
+    value: ${{ steps.run.outputs.passed }}
+  summary:
+    description: 'Human-readable summary of all check results'
+    value: ${{ steps.run.outputs.summary }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+
+    - name: Build gatewayproof
+      shell: bash
+      run: |
+        cd "${{ github.action_path }}"
+        npm ci
+        npm run build
+
+    - name: Run gatewayproof
+      id: run
+      shell: bash
+      run: |
+        set +e
+        OUTPUT_FILE=$(mktemp)
+        node "${{ github.action_path }}/dist/cli.js" --target "${{ inputs.target }}" --mock-port "${{ inputs.mock-port }}" | tee "$OUTPUT_FILE"
+        EXIT_CODE=${PIPESTATUS[0]}
+        set -e
+
+        {
+          echo "summary<<GATEWAYPROOF_EOF"
+          cat "$OUTPUT_FILE"
+          echo "GATEWAYPROOF_EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        if [ "$EXIT_CODE" -ne 0 ]; then
+          echo "passed=false" >> "$GITHUB_OUTPUT"
+          exit 1
+        else
+          echo "passed=true" >> "$GITHUB_OUTPUT"
+        fi

@@ -1,0 +1,68 @@
+name: Test action.yml
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - run: npm ci
+
+      - name: Start a correct reference gateway (upstream = mock on 5055)
+        run: |
+          rm -f /tmp/gw-url.txt
+          npx tsx scripts/self-test-gateway.ts reference http://127.0.0.1:5055 /tmp/gw-url.txt &
+          for i in $(seq 1 20); do [ -f /tmp/gw-url.txt ] && break; sleep 0.5; done
+          echo "REFERENCE_GATEWAY_URL=$(cat /tmp/gw-url.txt)" >> "$GITHUB_ENV"
+
+      - name: Run gatewayproof against the correct reference gateway (expect pass)
+        id: correct
+        uses: ./
+        with:
+          target: ${{ env.REFERENCE_GATEWAY_URL }}
+          mock-port: '5055'
+
+      - name: Assert the correct gateway passed
+        run: |
+          if [ "${{ steps.correct.outputs.passed }}" != "true" ]; then
+            echo "expected passed=true for the reference gateway, got '${{ steps.correct.outputs.passed }}'"
+            exit 1
+          fi
+          echo "OK: reference gateway passed all checks"
+
+      - name: Start a deliberately buggy gateway (upstream = mock on 5056)
+        run: |
+          rm -f /tmp/gw-url-buggy.txt
+          npx tsx scripts/self-test-gateway.ts buggy http://127.0.0.1:5056 /tmp/gw-url-buggy.txt &
+          for i in $(seq 1 20); do [ -f /tmp/gw-url-buggy.txt ] && break; sleep 0.5; done
+          echo "BUGGY_GATEWAY_URL=$(cat /tmp/gw-url-buggy.txt)" >> "$GITHUB_ENV"
+
+      - name: Run gatewayproof against the buggy gateway (expect failure)
+        id: buggy
+        uses: ./
+        continue-on-error: true
+        with:
+          target: ${{ env.BUGGY_GATEWAY_URL }}
+          mock-port: '5056'
+
+      - name: Assert the buggy gateway correctly failed
+        run: |
+          if [ "${{ steps.buggy.outputs.passed }}" != "false" ]; then
+            echo "expected passed=false for the buggy gateway, got '${{ steps.buggy.outputs.passed }}'"
+            exit 1
+          fi
+          if [ "${{ steps.buggy.outcome }}" != "failure" ]; then
+            echo "expected the action step to fail, got outcome=${{ steps.buggy.outcome }}"
+            exit 1
+          fi
+          echo "OK: buggy gateway correctly failed the checks"
