@@ -4,6 +4,8 @@
 [![npm](https://img.shields.io/npm/v/gatewayproof)](https://www.npmjs.com/package/gatewayproof)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
+![gatewayproof: conformance-testing an OpenAI-compatible LLM gateway](./docs/banner.svg)
+
 **A conformance test suite for OpenAI-compatible LLM gateways — catches streaming, usage, cost, concurrency, and error-handling bugs that an eyeball review of a diff won't.**
 
 ## Background, for anyone new to this
