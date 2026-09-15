@@ -1,0 +1,61 @@
+{
+  "name": "gatewayproof",
+  "version": "0.1.0",
+  "description": "A conformance test suite for OpenAI-compatible LLM gateways -- catches streaming-fidelity, usage-accuracy, cost-accuracy, concurrency, and error-propagation bugs against a deterministic mock upstream.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "gatewayproof": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run build && npm run test"
+  },
+  "keywords": [
+    "llm",
+    "gateway",
+    "proxy",
+    "litellm",
+    "conformance",
+    "testing",
+    "streaming",
+    "openai-compatible",
+    "cost-tracking"
+  ],
+  "author": "jayblast-spec",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayblast-spec/gatewayproof.git"
+  },
+  "homepage": "https://github.com/jayblast-spec/gatewayproof#readme",
+  "bugs": {
+    "url": "https://github.com/jayblast-spec/gatewayproof/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.2",
+    "vitest": "^5.0.1"
+  }
+}
