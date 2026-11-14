@@ -122,6 +122,12 @@ npm run build
 npx tsx examples/demo.ts   # runs the suite against a correct fixture and a deliberately buggy one
 ```
 
+## Need it run for you?
+
+- **LLM Gateway Conformance Check (48h, $99)** — I run this suite against your gateway and send a written report: https://veroputech.gumroad.com/l/llm-gateway-conformance-check-48h
+- **CI Gate Setup (48h, $149)** — a PR that adds gatewayproof to your GitHub Actions with a passing run: https://veroputech.gumroad.com/l/ci-gate-setup-48h
+- **Own it** — this repo, the npm name and the copyright are for sale as part of the [CI / Infra Tool Pack](https://veroputech.gumroad.com/l/ci-infra-tool-pack). Using it under MIT stays free either way.
+
 ## License
 
 MIT
