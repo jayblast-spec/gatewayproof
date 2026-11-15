@@ -45,7 +45,7 @@
     "type": "git",
     "url": "git+https://github.com/jayblast-spec/gatewayproof.git"
   },
-  "homepage": "https://github.com/jayblast-spec/gatewayproof#readme",
+  "homepage": "https://jayblast-spec.github.io/gatewayproof/",
   "bugs": {
     "url": "https://github.com/jayblast-spec/gatewayproof/issues"
   },
