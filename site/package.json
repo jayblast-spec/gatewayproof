@@ -1,0 +1,22 @@
+{
+  "name": "gatewayproof-docs",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static docs site for gatewayproof, exported for GitHub Pages.",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "NEXT_TELEMETRY_DISABLED=1 next build"
+  },
+  "dependencies": {
+    "next": "^15.5.4",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.1.1",
+    "@types/react-dom": "^19.1.1",
+    "typescript": "^5.9.2"
+  }
+}
