@@ -146,4 +146,4 @@ This is one of 8 independent open-source infrastructure tools, each built agains
 
 ---
 
-Built and maintained by [Michael Ogunleye](https://github.com/jayblast-spec) · [ArkNet Digital](https://arknet.digital).
+Built and maintained by [Michael](https://github.com/jayblast-spec) · [ArkNet Digital](https://arknet.digital).
